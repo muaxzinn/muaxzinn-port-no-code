@@ -83,17 +83,91 @@ document.getElementById('updatedAt').textContent=new Date().toLocaleDateString('
 const ICONS={Biology:'🌿',Anatomy:'🧠',Physics:'⚡',SciDay:'🧪',Islam:'🛐',Agriculture:'🚜',Energy:'🔋',Herb:'🌱',Education:'🎓'};
 const TAGS=[{key:'Biology',label:'ชีววิทยา'},{key:'Anatomy',label:'กายวิภาค'},{key:'Physics',label:'ฟิสิกส์'},{key:'SciDay',label:'กิจกรรม/แข่งขัน'},{key:'Islam',label:'อิสลามศึกษา'},{key:'Agriculture',label:'เกษตร'},{key:'Energy',label:'พลังงาน'},{key:'Herb',label:'สมุนไพร'},{key:'Education',label:'การศึกษา'}];
 const SOURCES=[{key:'Glide',label:'Glide App'},{key:'GoogleSites',label:'Google Sites'}];
-const RESOURCES=[
- {title:'โครงสร้างและการเจริญเติบโตของใบ',url:'https://leaf-structure-and-growth.glide.page/dl/de6ccd',source:'Glide',tags:['Biology','Education'],icon:'🌿',host:'glide.page',desc:'สื่อชีววิทยาโครงสร้างใบ'},
- {title:'WK Anatomy 3D',url:'https://wkanatomy3d.glide.page/',source:'Glide',tags:['Anatomy','Education'],icon:'🧠',host:'glide.page',desc:'สื่อกายวิภาค 3 มิติ'},
- {title:'maLearn — Work & Power',url:'https://malearn.glide.page/dl/d0a5f4',source:'Glide',tags:['Physics','Education'],icon:'⚡',host:'glide.page',desc:'บทเรียนฟิสิกส์งานและกำลัง'},
- {title:'SciDay PSU 2567',url:'https://wk-scidaypsu.glide.page/',source:'Glide',tags:['SciDay','Education'],icon:'🧪',host:'glide.page',desc:'กิจกรรมสัปดาห์วิทยาศาสตร์'},
- {title:'การทำดีต่อพ่อแม่',url:'https://sites.google.com/view/islamstudy1/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81',source:'GoogleSites',tags:['Islam','Education'],icon:'🛐',host:'sites.google.com',desc:'บทความอิสลามศึกษา'},
- {title:'ศูนย์การเรียนรู้โคกเวียงนา',url:'https://sites.google.com/view/wiengna/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81',source:'GoogleSites',tags:['Agriculture','Education'],icon:'🚜',host:'sites.google.com',desc:'เกษตรเพื่อชีวิต'},
- {title:'พลังงานทดแทนคมนาคม',url:'https://sites.google.com/view/fuel-subject/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81',source:'GoogleSites',tags:['Energy','Physics','Education'],icon:'🔋',host:'sites.google.com',desc:'พลังงานทดแทนด้านคมนาคม'},
- {title:'herb for life (อัญชัน)',url:'https://sites.google.com/view/fadia-phasuk/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81',source:'GoogleSites',tags:['Herb','Biology','Education'],icon:'🌱',host:'sites.google.com',desc:'สมุนไพรอัญชัน'},
- {title:'herb for life (รวมสมุนไพร)',url:'https://sites.google.com/view/herbforlife/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81',source:'GoogleSites',tags:['Herb','Biology','Education'],icon:'🌱',host:'sites.google.com',desc:'สมุนไพรอื่นๆ'}
+  
+const RESOURCES = [
+  {
+    title:'โครงสร้างและการเจริญเติบโตของใบ',
+    url:'https://leaf-structure-and-growth.glide.page/dl/de6ccd',
+    source:'Glide',
+    tags:['Biology','Education'],
+    icon:'🌿',
+    host:'glide.page',
+    desc:'สื่อการเรียนรู้ชีววิทยาอธิบายโครงสร้างและการเจริญเติบโตของใบอย่างเข้าใจง่าย เหมาะสำหรับนักเรียนและครู ใช้งานผ่าน Glide เพื่อเรียนได้ทุกที่ ทุกอุปกรณ์'
+  },
+  {
+    title:'WK Anatomy 3D',
+    url:'https://wkanatomy3d.glide.page/',
+    source:'Glide',
+    tags:['Anatomy','Education'],
+    icon:'🧠',
+    host:'glide.page',
+    desc:'แอปกายวิภาคศาสตร์สามมิติที่โต้ตอบได้ ศึกษาโครงสร้างอวัยวะภายในร่างกายแบบ 3D ใช้งานง่ายบนมือถือและคอมพิวเตอร์ เหมาะสำหรับนักเรียนและผู้สนใจทางการแพทย์'
+  },
+  {
+    title:'maLearn — Work & Power',
+    url:'https://malearn.glide.page/dl/d0a5f4',
+    source:'Glide',
+    tags:['Physics','Education'],
+    icon:'⚡',
+    host:'glide.page',
+    desc:'บทเรียนฟิสิกส์หัวข้อ งานและกำลัง นำเสนอผ่านสื่ออินเทอร์แอคทีฟ ช่วยให้เข้าใจหลักการและตัวอย่างการคำนวณ เหมาะสำหรับนักเรียนมัธยมและผู้ที่เริ่มเรียนฟิสิกส์'
+  },
+  {
+    title:'SciDay PSU 2567',
+    url:'https://wk-scidaypsu.glide.page/',
+    source:'Glide',
+    tags:['SciDay','Education'],
+    icon:'🧪',
+    host:'glide.page',
+    desc:'แหล่งรวมข้อมูลและลิงก์กิจกรรมสัปดาห์วิทยาศาสตร์ ม.อ. 2567 สำหรับกลุ่มเวียง ใช้ตรวจสอบรายละเอียดการประกวด กำหนดการ และเข้าถึงแหล่งข้อมูลได้รวดเร็ว'
+  },
+  {
+    title:'การทำดีต่อพ่อแม่',
+    url:'https://sites.google.com/view/islamstudy1/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81',
+    source:'GoogleSites',
+    tags:['Islam','Education'],
+    icon:'🛐',
+    host:'sites.google.com',
+    desc:'สื่อการเรียนรู้อิสลามศึกษา นำเสนอแนวคิดและคำสอนเกี่ยวกับการปฏิบัติดีต่อบิดามารดา เหมาะสำหรับผู้เรียนทั่วไปและผู้ที่สนใจแนวทางการดำเนินชีวิตตามหลักศาสนา'
+  },
+  {
+    title:'ศูนย์การเรียนรู้โคกเวียงนา',
+    url:'https://sites.google.com/view/wiengna/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81',
+    source:'GoogleSites',
+    tags:['Agriculture','Education'],
+    icon:'🚜',
+    host:'sites.google.com',
+    desc:'เว็บไซต์นำเสนอโมเดลการเกษตรเพื่อชีวิต จัดแสดงฐานเรียนรู้ เช่น บ่อปลา ผักลอยฟ้า โรงเรือน และเห็ดนางฟ้า เพื่อสร้างแรงบันดาลใจและความรู้ด้านเกษตรกรรมยั่งยืน'
+  },
+  {
+    title:'พลังงานทดแทนคมนาคม',
+    url:'https://sites.google.com/view/fuel-subject/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81',
+    source:'GoogleSites',
+    tags:['Energy','Physics','Education'],
+    icon:'🔋',
+    host:'sites.google.com',
+    desc:'แหล่งข้อมูลพลังงานทางเลือกด้านการคมนาคม เช่น แก๊สโซฮอล์ ไบโอดีเซล ไฮโดรเจน และเครื่องยนต์ไฮบริด พร้อมสื่อวิดีโอประกอบการเรียนรู้ด้านพลังงานและสิ่งแวดล้อม'
+  },
+  {
+    title:'herb for life (อัญชัน)',
+    url:'https://sites.google.com/view/fadia-phasuk/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81',
+    source:'GoogleSites',
+    tags:['Herb','Biology','Education'],
+    icon:'🌱',
+    host:'sites.google.com',
+    desc:'คู่มือสมุนไพรอัญชัน อธิบายลักษณะทางพฤกษศาสตร์ ประโยชน์ การนำมาใช้ และสรรพคุณด้านสุขภาพ เหมาะสำหรับผู้สนใจสมุนไพรและการดูแลสุขภาพแบบธรรมชาติ'
+  },
+  {
+    title:'herb for life (รวมสมุนไพร)',
+    url:'https://sites.google.com/view/herbforlife/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81',
+    source:'GoogleSites',
+    tags:['Herb','Biology','Education'],
+    icon:'🌱',
+    host:'sites.google.com',
+    desc:'แหล่งรวมความรู้สมุนไพรเพื่อสุขภาพ เช่น ฟ้าทะลายโจร ขมิ้นชัน พร้อมข้อมูลประโยชน์ วิธีใช้ และคำแนะนำพื้นฐานในการดูแลร่างกายจากพืชสมุนไพรไทย'
+  }
 ];
+
 
 const q=document.getElementById('q');
 const sortSel=document.getElementById('sort');
@@ -171,4 +245,3 @@ render();
 </script>
 </body>
 </html>
-
