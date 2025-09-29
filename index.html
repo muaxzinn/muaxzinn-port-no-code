@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Firman portfolio — พอร์ตรวมเว็บไซต์ที่พัฒนาขึ้นมา โดยที่พัฒนา แบบ no-code </title>
+  <style>
+    :root{
+      --bg:#0b0d11; --card:#11151b; --muted:#9aa4b2; --text:#e6e9ee; --brand:#0ea5e9; --chip:#1f2937; --chip-on:#0284c7;
+      --ring: rgba(125,211,252,.45);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans Thai",Arial,sans-serif;
+      background:radial-gradient(1200px 600px at 10% -10%,rgba(14,165,233,.15),transparent 50%),radial-gradient(1000px 500px at 120% 10%,rgba(99,102,241,.12),transparent 50%),var(--bg);
+      color:var(--text);}
+    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:rgba(11,13,17,.85);border-bottom:1px solid rgba(255,255,255,.06)}
+    .wrap{max-width:1100px;margin:0 auto;padding:20px}
+    .title{display:flex;gap:14px;align-items:center}
+    .logo{font-size:28px}
+    .title h1{margin:0;font-size:20px}
+    .sub{margin:6px 0 0;color:var(--muted);font-size:13px}
+    .controls{display:grid;gap:12px;grid-template-columns:1fr;padding:14px 0 4px}
+    @media (min-width:760px){.controls{grid-template-columns:1.2fr .8fr .8fr}}
+    .search{position:relative}
+    .search input{width:100%;padding:12px 40px 12px 14px;border-radius:12px;background:#0f1318;border:1px solid rgba(255,255,255,.08);color:var(--text)}
+    .search input:focus{box-shadow:0 0 0 4px var(--ring);border-color:var(--brand)}
+    .search .icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);opacity:.6}
+    .chips,.source{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{padding:8px 12px;border-radius:999px;background:var(--chip);color:#dbe2ea;font-size:13px;border:1px solid rgba(255,255,255,.06);cursor:pointer}
+    .chip[data-active="true"]{background:linear-gradient(180deg,var(--chip-on),#0369a1);border-color:transparent}
+    .sort{padding:10px 12px;border-radius:10px;background:#0f1318;border:1px solid rgba(255,255,255,.08);color:var(--text)}
+    main{padding:8px 0 80px}
+    .grid{display:grid;gap:14px;grid-template-columns:1fr}
+    @media(min-width:600px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:980px){.grid{grid-template-columns:repeat(3,1fr)}}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px}
+    .top{display:flex;gap:10px}
+    .avatar{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:22px;background:#0b0f14;border:1px solid rgba(255,255,255,.06)}
+    .name{font-weight:600}
+    .desc{color:var(--muted);font-size:13px;margin-top:4px;line-height:1.5}
+    .badges,.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+    .badge,.tag{font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.1)}
+    .badge{background:rgba(125,211,252,.12);color:#bfe8ff}
+    .tag{background:#0f1720;color:#cbd5e1}
+    .actions{display:flex;gap:8px;margin-top:12px}
+    .btn{cursor:pointer;padding:10px 12px;border-radius:10px;background:#0f1318;color:var(--text);border:1px solid rgba(255,255,255,.08)}
+    .btn.primary{background:linear-gradient(180deg,#0ea5e9,#0284c7);border:none;color:white;text-decoration:none;display:inline-block}
+    footer{border-top:1px solid rgba(255,255,255,.08);color:var(--muted)}
+    .small{font-size:12px}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="title">
+      <div class="logo">🧭</div>
+      <div>
+        <h1>Firman portfolio — พอร์ตรวมเว็บไซต์ที่พัฒนาขึ้นมา โดยที่พัฒนา แบบ no-code</h1>
+        <p class="sub">รวมลิงก์จาก Glide และ Google Sites • อัปเดตล่าสุด: <span id="updatedAt"></span></p>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="search">
+        <input id="q" type="search" placeholder="ค้นหา: ชื่อ หัวข้อ แท็ก" />
+        <span class="icon">🔎</span>
+      </div>
+      <div class="source" id="sourceChips"></div>
+      <select id="sort" class="sort">
+        <option value="group">เรียงตามหมวด</option>
+        <option value="az">A → Z</option>
+      </select>
+    </div>
+    <div class="chips" id="tagChips"></div>
+  </div>
+</header>
+
+<main class="wrap"><div id="grid" class="grid"></div></main>
+<footer><div class="wrap"><div class="small">WK Hub • HTML หน้าเดียว • รองรับมือถือ</div></div></footer>
+
+<script>
+document.getElementById('updatedAt').textContent=new Date().toLocaleDateString('th-TH',{dateStyle:'long'});
+
+const ICONS={Biology:'🌿',Anatomy:'🧠',Physics:'⚡',SciDay:'🧪',Islam:'🛐',Agriculture:'🚜',Energy:'🔋',Herb:'🌱',Education:'🎓'};
+const TAGS=[{key:'Biology',label:'ชีววิทยา'},{key:'Anatomy',label:'กายวิภาค'},{key:'Physics',label:'ฟิสิกส์'},{key:'SciDay',label:'กิจกรรม/แข่งขัน'},{key:'Islam',label:'อิสลามศึกษา'},{key:'Agriculture',label:'เกษตร'},{key:'Energy',label:'พลังงาน'},{key:'Herb',label:'สมุนไพร'},{key:'Education',label:'การศึกษา'}];
+const SOURCES=[{key:'Glide',label:'Glide App'},{key:'GoogleSites',label:'Google Sites'}];
+const RESOURCES=[
+ {title:'โครงสร้างและการเจริญเติบโตของใบ',url:'https://leaf-structure-and-growth.glide.page/dl/de6ccd',source:'Glide',tags:['Biology','Education'],icon:'🌿',host:'glide.page',desc:'สื่อชีววิทยาโครงสร้างใบ'},
+ {title:'WK Anatomy 3D',url:'https://wkanatomy3d.glide.page/',source:'Glide',tags:['Anatomy','Education'],icon:'🧠',host:'glide.page',desc:'สื่อกายวิภาค 3 มิติ'},
+ {title:'maLearn — Work & Power',url:'https://malearn.glide.page/dl/d0a5f4',source:'Glide',tags:['Physics','Education'],icon:'⚡',host:'glide.page',desc:'บทเรียนฟิสิกส์งานและกำลัง'},
+ {title:'SciDay PSU 2567',url:'https://wk-scidaypsu.glide.page/',source:'Glide',tags:['SciDay','Education'],icon:'🧪',host:'glide.page',desc:'กิจกรรมสัปดาห์วิทยาศาสตร์'},
+ {title:'การทำดีต่อพ่อแม่',url:'https://sites.google.com/view/islamstudy1/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81',source:'GoogleSites',tags:['Islam','Education'],icon:'🛐',host:'sites.google.com',desc:'บทความอิสลามศึกษา'},
+ {title:'ศูนย์การเรียนรู้โคกเวียงนา',url:'https://sites.google.com/view/wiengna/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81',source:'GoogleSites',tags:['Agriculture','Education'],icon:'🚜',host:'sites.google.com',desc:'เกษตรเพื่อชีวิต'},
+ {title:'พลังงานทดแทนคมนาคม',url:'https://sites.google.com/view/fuel-subject/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81',source:'GoogleSites',tags:['Energy','Physics','Education'],icon:'🔋',host:'sites.google.com',desc:'พลังงานทดแทนด้านคมนาคม'},
+ {title:'herb for life (อัญชัน)',url:'https://sites.google.com/view/fadia-phasuk/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81',source:'GoogleSites',tags:['Herb','Biology','Education'],icon:'🌱',host:'sites.google.com',desc:'สมุนไพรอัญชัน'},
+ {title:'herb for life (รวมสมุนไพร)',url:'https://sites.google.com/view/herbforlife/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81',source:'GoogleSites',tags:['Herb','Biology','Education'],icon:'🌱',host:'sites.google.com',desc:'สมุนไพรอื่นๆ'}
+];
+
+const q=document.getElementById('q');
+const sortSel=document.getElementById('sort');
+const tagChips=document.getElementById('tagChips');
+const sourceChips=document.getElementById('sourceChips');
+
+/* เริ่มต้นไม่เลือกอะไรเลย */
+const selected={tags:new Set(),sources:new Set()};
+
+function makeChip(key,label,group){
+  const b=document.createElement('button');
+  b.className='chip'; b.dataset.key=key; b.dataset.group=group; b.dataset.active='false'; b.textContent=label;
+  b.onclick=()=>{
+    const on=b.dataset.active==='true'; 
+    b.dataset.active=on?'false':'true';
+    const set=group==='tag'?selected.tags:selected.sources;
+    if(on) set.delete(key); else set.add(key);
+    render();
+  };
+  return b;
+}
+SOURCES.forEach(s=>sourceChips.appendChild(makeChip(s.key,s.label,'source')));
+TAGS.forEach(t=>tagChips.appendChild(makeChip(t.key,`${ICONS[t.key]} ${t.label}`,'tag')));
+
+q.addEventListener('input',render);
+sortSel.addEventListener('change',render);
+
+function matches(r){
+  if(selected.sources.size && !selected.sources.has(r.source)) return false;
+  if(selected.tags.size){
+    const ok=[...selected.tags].some(t=>r.tags.includes(t));
+    if(!ok) return false;
+  }
+  const s=(q.value||'').trim().toLowerCase();
+  if(!s) return true;
+  return [r.title,r.desc,r.tags.join(' '),r.host].join(' ').toLowerCase().includes(s);
+}
+function sortItems(arr){
+  return sortSel.value==='az'
+    ?[...arr].sort((a,b)=>a.title.localeCompare(b.title))
+    :[...arr].sort((a,b)=> (a.tags[0]||'').localeCompare(b.tags[0]||'') || a.title.localeCompare(b.title));
+}
+function cardTemplate(r){
+  const el=document.createElement('article');el.className='card';
+  el.innerHTML=`<div class="top">
+    <div class="avatar">${r.icon}</div>
+    <div><div class="name">${r.title}</div>
+      <div class="desc">${r.desc}</div>
+      <div class="badges"><span class="badge">${r.source}</span><span class="badge">${r.host}</span></div>
+      <div class="tags">${r.tags.map(t=>`<span class="tag">${ICONS[t]||'🏷️'} ${(TAGS.find(x=>x.key===t)||{}).label||t}</span>`).join('')}</div>
+      <div class="actions">
+        <a class="btn primary" href="${r.url}" target="_blank" rel="noopener">เปิดลิงก์</a>
+        <button class="btn" data-copy>คัดลอกลิงก์</button>
+      </div></div></div>`;
+  el.querySelector('[data-copy]').onclick=async()=>{
+    try{await navigator.clipboard.writeText(r.url);toast('คัดลอกลิงก์แล้ว ✔');}
+    catch{prompt('คัดลอกลิงก์เอง:',r.url);}
+  };
+  return el;
+}
+const grid=document.getElementById('grid');
+function render(){
+  grid.innerHTML='';
+  const items=sortItems(RESOURCES.filter(matches));
+  if(!items.length){grid.innerHTML='<div class="small">เลือกแท็ก/แหล่ง หรือพิมพ์ค้นหาเพื่อดูข้อมูล</div>';return;}
+  items.forEach(r=>grid.appendChild(cardTemplate(r)));
+}
+function toast(m){
+  const t=document.createElement('div');
+  t.textContent=m;
+  t.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#0ea5e9;color:white;padding:10px 14px;border-radius:10px;box-shadow:0 10px 30px rgba(2,132,199,.4);z-index:9999;';
+  document.body.appendChild(t);setTimeout(()=>t.remove(),1500);
+}
+render();
+</script>
+</body>
+</html>
+
