@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Firman portfolio — พอร์ตรวมเว็บไซต์ที่พัฒนาขึ้นมา โดยที่พัฒนา แบบ no-code </title>
+  <title>WK Hub — พอร์ตรวมลิงก์การเรียนรู้</title>
   <style>
     :root{
       --bg:#0b0d11; --card:#11151b; --muted:#9aa4b2; --text:#e6e9ee; --brand:#0ea5e9; --chip:#1f2937; --chip-on:#0284c7;
@@ -66,7 +66,7 @@
       </div>
       <div class="source" id="sourceChips"></div>
       <select id="sort" class="sort">
-        <option value="group">เรียงตามหมวด</option>
+        <option value="group">เรียงตามปี</option>
         <option value="az">A → Z</option>
       </select>
     </div>
@@ -84,6 +84,7 @@ const ICONS={Biology:'🌿',Anatomy:'🧠',Physics:'⚡',SciDay:'🧪',Islam:'�
 const TAGS=[{key:'Biology',label:'ชีววิทยา'},{key:'Anatomy',label:'กายวิภาค'},{key:'Physics',label:'ฟิสิกส์'},{key:'SciDay',label:'กิจกรรม/แข่งขัน'},{key:'Islam',label:'อิสลามศึกษา'},{key:'Agriculture',label:'เกษตร'},{key:'Energy',label:'พลังงาน'},{key:'Herb',label:'สมุนไพร'},{key:'Education',label:'การศึกษา'}];
 const SOURCES=[{key:'Glide',label:'Glide App'},{key:'GoogleSites',label:'Google Sites'}];
   
+/* 1) แทนที่ RESOURCES ด้วยเวอร์ชันนี้ (เพิ่ม year ให้ครบ) */
 const RESOURCES = [
   {
     title:'โครงสร้างและการเจริญเติบโตของใบ',
@@ -92,6 +93,7 @@ const RESOURCES = [
     tags:['Biology','Education'],
     icon:'🌿',
     host:'glide.page',
+    year: 2024,
     desc:'สื่อการเรียนรู้ชีววิทยาอธิบายโครงสร้างและการเจริญเติบโตของใบอย่างเข้าใจง่าย เหมาะสำหรับนักเรียนและครู ใช้งานผ่าน Glide เพื่อเรียนได้ทุกที่ ทุกอุปกรณ์'
   },
   {
@@ -101,6 +103,7 @@ const RESOURCES = [
     tags:['Anatomy','Education'],
     icon:'🧠',
     host:'glide.page',
+    year: 2024,
     desc:'แอปกายวิภาคศาสตร์สามมิติที่โต้ตอบได้ ศึกษาโครงสร้างอวัยวะภายในร่างกายแบบ 3D ใช้งานง่ายบนมือถือและคอมพิวเตอร์ เหมาะสำหรับนักเรียนและผู้สนใจทางการแพทย์'
   },
   {
@@ -110,6 +113,7 @@ const RESOURCES = [
     tags:['Physics','Education'],
     icon:'⚡',
     host:'glide.page',
+    year: 2024,
     desc:'บทเรียนฟิสิกส์หัวข้อ งานและกำลัง นำเสนอผ่านสื่ออินเทอร์แอคทีฟ ช่วยให้เข้าใจหลักการและตัวอย่างการคำนวณ เหมาะสำหรับนักเรียนมัธยมและผู้ที่เริ่มเรียนฟิสิกส์'
   },
   {
@@ -119,6 +123,7 @@ const RESOURCES = [
     tags:['SciDay','Education'],
     icon:'🧪',
     host:'glide.page',
+    year: 2024,
     desc:'แหล่งรวมข้อมูลและลิงก์กิจกรรมสัปดาห์วิทยาศาสตร์ ม.อ. 2567 สำหรับกลุ่มเวียง ใช้ตรวจสอบรายละเอียดการประกวด กำหนดการ และเข้าถึงแหล่งข้อมูลได้รวดเร็ว'
   },
   {
@@ -128,6 +133,7 @@ const RESOURCES = [
     tags:['Islam','Education'],
     icon:'🛐',
     host:'sites.google.com',
+    year: 2021,
     desc:'สื่อการเรียนรู้อิสลามศึกษา นำเสนอแนวคิดและคำสอนเกี่ยวกับการปฏิบัติดีต่อบิดามารดา เหมาะสำหรับผู้เรียนทั่วไปและผู้ที่สนใจแนวทางการดำเนินชีวิตตามหลักศาสนา'
   },
   {
@@ -137,6 +143,7 @@ const RESOURCES = [
     tags:['Agriculture','Education'],
     icon:'🚜',
     host:'sites.google.com',
+    year: 2022,
     desc:'เว็บไซต์นำเสนอโมเดลการเกษตรเพื่อชีวิต จัดแสดงฐานเรียนรู้ เช่น บ่อปลา ผักลอยฟ้า โรงเรือน และเห็ดนางฟ้า เพื่อสร้างแรงบันดาลใจและความรู้ด้านเกษตรกรรมยั่งยืน'
   },
   {
@@ -146,6 +153,7 @@ const RESOURCES = [
     tags:['Energy','Physics','Education'],
     icon:'🔋',
     host:'sites.google.com',
+    year: 2022,
     desc:'แหล่งข้อมูลพลังงานทางเลือกด้านการคมนาคม เช่น แก๊สโซฮอล์ ไบโอดีเซล ไฮโดรเจน และเครื่องยนต์ไฮบริด พร้อมสื่อวิดีโอประกอบการเรียนรู้ด้านพลังงานและสิ่งแวดล้อม'
   },
   {
@@ -155,6 +163,7 @@ const RESOURCES = [
     tags:['Herb','Biology','Education'],
     icon:'🌱',
     host:'sites.google.com',
+    year: 2021,
     desc:'คู่มือสมุนไพรอัญชัน อธิบายลักษณะทางพฤกษศาสตร์ ประโยชน์ การนำมาใช้ และสรรพคุณด้านสุขภาพ เหมาะสำหรับผู้สนใจสมุนไพรและการดูแลสุขภาพแบบธรรมชาติ'
   },
   {
@@ -164,10 +173,10 @@ const RESOURCES = [
     tags:['Herb','Biology','Education'],
     icon:'🌱',
     host:'sites.google.com',
+    year: 2021,
     desc:'แหล่งรวมความรู้สมุนไพรเพื่อสุขภาพ เช่น ฟ้าทะลายโจร ขมิ้นชัน พร้อมข้อมูลประโยชน์ วิธีใช้ และคำแนะนำพื้นฐานในการดูแลร่างกายจากพืชสมุนไพรไทย'
   }
 ];
-
 
 const q=document.getElementById('q');
 const sortSel=document.getElementById('sort');
@@ -205,29 +214,47 @@ function matches(r){
   if(!s) return true;
   return [r.title,r.desc,r.tags.join(' '),r.host].join(' ').toLowerCase().includes(s);
 }
-function sortItems(arr){
-  return sortSel.value==='az'
-    ?[...arr].sort((a,b)=>a.title.localeCompare(b.title))
-    :[...arr].sort((a,b)=> (a.tags[0]||'').localeCompare(b.tags[0]||'') || a.title.localeCompare(b.title));
+/* 2) แทนที่ฟังก์ชัน sortItems ด้วยเวอร์ชันนี้ (เรียงปีใหม่ → เก่า, จากนั้น A→Z) */
+function sortItems(arr) {
+  return [...arr].sort((a, b) => {
+    const ya = a.year || 0;
+    const yb = b.year || 0;
+    if (yb !== ya) return yb - ya; // ปีใหม่ก่อน
+    return a.title.localeCompare(b.title);
+  });
 }
+
+
+
+/* 3) อัปเดต cardTemplate ให้แสดงปีพัฒนาใน badge */
 function cardTemplate(r){
   const el=document.createElement('article');el.className='card';
   el.innerHTML=`<div class="top">
     <div class="avatar">${r.icon}</div>
-    <div><div class="name">${r.title}</div>
+    <div>
+      <div class="name">${r.title}</div>
       <div class="desc">${r.desc}</div>
-      <div class="badges"><span class="badge">${r.source}</span><span class="badge">${r.host}</span></div>
-      <div class="tags">${r.tags.map(t=>`<span class="tag">${ICONS[t]||'🏷️'} ${(TAGS.find(x=>x.key===t)||{}).label||t}</span>`).join('')}</div>
+      <div class="badges">
+        <span class="badge">${r.source}</span>
+        <span class="badge">${r.host}</span>
+        <span class="badge">ปี ${r.year || 'ไม่ระบุ'}</span>
+      </div>
+      <div class="tags">
+        ${r.tags.map(t=>`<span class="tag">${ICONS[t]||'🏷️'} ${(TAGS.find(x=>x.key===t)||{}).label||t}</span>`).join('')}
+      </div>
       <div class="actions">
         <a class="btn primary" href="${r.url}" target="_blank" rel="noopener">เปิดลิงก์</a>
         <button class="btn" data-copy>คัดลอกลิงก์</button>
-      </div></div></div>`;
+      </div>
+    </div>
+  </div>`;
   el.querySelector('[data-copy]').onclick=async()=>{
     try{await navigator.clipboard.writeText(r.url);toast('คัดลอกลิงก์แล้ว ✔');}
     catch{prompt('คัดลอกลิงก์เอง:',r.url);}
   };
   return el;
 }
+
 const grid=document.getElementById('grid');
 function render(){
   grid.innerHTML='';
